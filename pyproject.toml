@@ -1,0 +1,64 @@
+[project]
+name = "drivestudio"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "torch",
+    "torchvision",
+    "xformers",
+    "timm",
+    "pytorch_msssim",
+    "omegaconf",
+    "torchmetrics",
+    "tensorboard",
+    "wandb",
+    "matplotlib",
+    "plotly",
+    "viser",
+    "imageio",
+    "imageio-ffmpeg",
+    "scikit-image",
+    "opencv-python",
+    "open3d",
+    "pyquaternion",
+    "chumpy", # ref: github.com/astral-sh/uv/issues/7291
+    "numpy<2.0.0",
+    "kornia",
+    "tqdm",
+    "gdown",
+    "nerfview",
+    "splines", # explicitly required by nerfview 0.1.2 as of 30 April 2025
+    "lpips",
+    # "smplx", # use the modified one in this repo
+    "gsplat==1.3.0",
+    "pytorch3d",
+    "nvdiffrast",
+]
+
+[project.optional-dependencies]
+build = ["setuptools", "pip"]
+run = ["chumpy"]
+
+[tool.uv]
+no-build-isolation-package = ["chumpy"]
+
+[tool.uv.sources]
+# We are using the cu124 build of pytorch since the cu126 has a bug preventing See README.md for details.
+# torch = { index = "pytorch-cu124" }
+# torchvision = { index = "pytorch-cu124" }
+# xformers = { index = "pytorch-cu124" }
+pytorch3d = { git = "https://github.com/facebookresearch/pytorch3d.git" }
+nvdiffrast = { git = "https://github.com/NVlabs/nvdiffrast" }
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[dependency-groups]
+test = [
+    "ipykernel>=6.29.5",
+    "pip>=25.1",
+]

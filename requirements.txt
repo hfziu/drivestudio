@@ -1,33 +1,37 @@
 # PyTorch and related libraries
---extra-index-url https://download.pytorch.org/whl/cu117
-torch==2.0.0+cu117
-torchvision==0.15.0+cu117
-xformers==0.0.18
-timm==0.9.5
-pytorch_msssim==1.0.0
+# assuming latest stable CUDA version 12.8 as of April 2025.
+# modified from https://github.com/ziyc/drivestudio/blob/main/requirements.txt
+# --extra-index-url https://download.pytorch.org/whl/cu128
+torch
+torchvision
+xformers
+timm
+pytorch_msssim
 
-omegaconf==2.3.0
-torchmetrics==0.10.3
+omegaconf
+torchmetrics
 
-tensorboard==2.11.0
-wandb==0.15.8
-matplotlib==3.5.3
-plotly==5.13.1
-viser==0.2.1
+tensorboard
+wandb
+matplotlib
+plotly
+viser
 
 imageio
 imageio-ffmpeg
-scikit-image==0.20.0
+scikit-image
 opencv-python
 
-open3d==0.16.0
-pyquaternion==0.9.9
+open3d # requires python <= 3.12 as of 25-April-2025
+pyquaternion
 chumpy
-numpy==1.23.1
-kornia==0.7.2
+numpy<2.0
+kornia
 
 tqdm
 gdown
 
-nerfview==0.0.3
-lpips==0.1.4
+nerfview
+lpips
+
+# smplx  # this was bundled with the original drivestudio code. Why not use the one from pip?

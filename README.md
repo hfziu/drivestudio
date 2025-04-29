@@ -24,12 +24,14 @@ A 3DGS framework for omni urban scene reconstruction and simulation!
 </p>
 
 ## About
+
 DriveStudio is a 3DGS codebase for urban scene reconstruction/simulation. It offers a system with multiple Gaussian representations to jointly reconstruct backgrounds, vehicles, and non-rigid categories (pedestrians, cyclists, etc.) from driving logs. DriveStudio also provides a unified data system supporting various popular driving datasets, including [Waymo](https://waymo.com/open/), [PandaSet](https://pandaset.org/), [Argoverse2](https://www.argoverse.org/av2.html), [KITTI](http://www.cvlibs.net/datasets/kitti/), [NuScenes](https://www.nuscenes.org/), and [NuPlan](https://www.nuscenes.org/nuplan).
 
 This codebase also contains the **official implementation** of:
   > **OmniRe: Omni Urban Scene Reconstruction** <br> [Project Page](https://ziyc.github.io/omnire/) | [Paper](https://arxiv.org/abs/2408.16760) <br> [Ziyu Chen](https://ziyc.github.io/), [Jiawei Yang](https://jiawei-yang.github.io/), [Jiahui Huang](https://huangjh-pub.github.io/), [Riccardo de Lutio](https://riccardodelutio.github.io/), [Janick Martinez Esturo](https://www.jme.pub/), [Boris Ivanovic](https://www.borisivanovic.com/), [Or Litany](https://orlitany.github.io/), [Zan Gojcic](https://zgojcic.github.io/), [Sanja Fidler](https://www.cs.utoronto.ca/~fidler/), [Marco Pavone](https://stanford.edu/~pavone/), [Li Song](https://medialab.sjtu.edu.cn/author/li-song/), [Yue Wang](https://yuewang.xyz/)
 
 # 🎉 Try your own projects/research on DriveStudio!
+
 ### 🔥 Highlighted implementations
 
 Our codebase supports two types of Gaussian trainers:
@@ -56,6 +58,7 @@ Our codebase supports two types of Gaussian trainers:
 We extend our gratitude to the authors for their remarkable contributions. If you find these works useful, please consider citing them.
 
 ### 🚗 Dataset Support
+
 This codebase provides support for popular driving datasets. We offer instructions and scripts on how to download and process these datasets:
 
 | Dataset | Instruction | Cameras | Sync Frequency | Object Annotation |
@@ -84,7 +87,7 @@ We have implemented interesting and useful functionalities:
 
 4. **Objects' GT Bounding Box Refinement:** To address noise in ground truth boxes, we've added this feature to further improve accuracy and robustness.
 
-5. **Affine Transformation:** This feature handles camera exposure and other related issues, enhancing the quality of scene reconstruction. 
+5. **Affine Transformation:** This feature handles camera exposure and other related issues, enhancing the quality of scene reconstruction.
 
 6. ...
 
@@ -119,6 +122,7 @@ cd ../..
 ```
 
 ## 📊 Prepare Data
+
 We support most popular public driving datasets. Detailed instructions for downloading and processing each dataset are available in the following documents:
 
 - Waymo: [Data Process Instruction](docs/Waymo.md)
@@ -129,7 +133,9 @@ We support most popular public driving datasets. Detailed instructions for downl
 - KITTI: [Data Process Instruction](docs/KITTI.md)
 
 ## 🚀 Running
+
 ### Training
+
 ```shell
 export PYTHONPATH=$(pwd)
 start_timestep=0 # start frame index for training
@@ -150,12 +156,15 @@ python tools/train.py \
 - Specify dataset and number of cameras by setting `dataset`. Examples: `waymo/1cams`, `waymo/5cams`, `pandaset/6cams`, `argoverse/7cams`, etc.
   You can set up arbitrary camera combinations for each dataset. See `configs/datasets/` for custom configuration details.
 - For over 3 cameras or 450+ images, we recommend using `omnire_extended_cam.yaml`. It works better in practice.
+
 ### Evaluation
+
 ```shell
 python tools/eval.py --resume_from $ckpt_path
 ```
 
 ## 👏 Contributions
+
 We're improving our project to develop a robust driving recom/sim system. Some areas we're focusing on:
 
 - A real-time viewer for background and foreground visualization
@@ -165,12 +174,14 @@ We're improving our project to develop a robust driving recom/sim system. Some a
 We welcome pull requests and collaborations. If you'd like to contribute or have questions, feel free to open an issue or contact [Ziyu Chen](https://github.com/ziyc) (ziyu.sjtu@gmail.com).
 
 ## 🙏 Acknowledgments
+
 We utilize the rasterization kernel from [gsplat](https://github.com/nerfstudio-project/gsplat). Parts of our implementation are based on work from [EmerNeRF](https://github.com/NVlabs/EmerNeRF), [NerfStudio](https://github.com/nerfstudio-project/nerfstudio), [GART](https://github.com/JiahuiLei/GART), and [Neuralsim](https://github.com/PJLab-ADG/neuralsim). We've also implemented unofficial versions of [Deformable-GS](https://github.com/ingra14m/Deformable-3D-Gaussians), [PVG](https://github.com/fudan-zvg/PVG), and [Street Gaussians](https://github.com/zju3dv/street_gaussians), with reference to their original codebases.
 
 We extend our deepest gratitude to the authors for their contributions to the community, which have greatly supported our research.
 
 ## Citation
-```
+
+```bib
 @article{chen2024omnire,
     title={OmniRe: Omni Urban Scene Reconstruction},
     author={Chen, Ziyu and Yang, Jiawei and Huang, Jiahui and Lutio, Riccardo de and Esturo, Janick Martinez and Ivanovic, Boris and Litany, Or and Gojcic, Zan and Fidler, Sanja and Pavone, Marco and Song, Li and Wang, Yue},
@@ -178,3 +189,11 @@ We extend our deepest gratitude to the authors for their contributions to the co
     year={2024}
 }
 ```
+
+## Troubleshooting
+
+### Python Environment
+
+- Installing `torch 2.6.0+cu126` using the `uv` interface (e.g., via `uv sync`) will not include (or will uninstall, if already installed) the `nvidia-*` dependencies. This issue appears to have been fixed in `torch 2.7.0`. However, as of 28 April 2025, there is no `xformers` version that is compatible with `torch 2.7.0` released.
+  - Alternatively you can sync `torch 2.6.0+cu124`.
+  - See [uv#12774](https://github.com/astral-sh/uv/issues/12774), [pytorch#146679](https://github.com/pytorch/pytorch/issues/146679)
