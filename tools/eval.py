@@ -33,6 +33,10 @@ def do_evaluation(
 ):
     trainer.set_eval()
 
+    # RigidNodes editting example
+    # trans = trainer.models["RigidNodes"].instances_trans
+    # trans[:, 1:20, 1] *= 0.5
+
     logger.info("Evaluating Pixels...")
     if dataset.test_image_set is not None and cfg.render.render_test:
         logger.info("Evaluating Test Set Pixels...")
@@ -215,12 +219,12 @@ def main(args):
         "RigidNodes_rgbs",
         "DeformableNodes_rgbs",
         "SMPLNodes_rgbs",
-        # "depths",
+        "depths",
         # "Background_depths",
         # "RigidNodes_depths",
         # "DeformableNodes_depths",
         # "SMPLNodes_depths",
-        # "mask"
+        "mask"
     ]
     if cfg.render.vis_lidar:
         render_keys.insert(0, "lidar_on_images")
@@ -231,6 +235,9 @@ def main(args):
     
     if args.save_catted_videos:
         cfg.logging.save_seperate_video = False
+
+    # temp
+    render_keys.insert(0, "lidar_on_images")
     
     do_evaluation(
         step=trainer.step,
